@@ -1,6 +1,7 @@
 import $ from "jquery";
 
 $(document).ready(() => {
+  $('body').append("<p id='logo'></p>");
   $('body').append('<p>Holberton Dashboard</p>');
   $('body').append('<p>Dashboard data for the students</p>');
   const button = $('<button>Click here to get started</button>');
