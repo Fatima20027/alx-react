@@ -1,9 +1,11 @@
 import holbertonLogo from './Holberton-logo.jpg';
 import './App.css';
 import React from 'react';
+import { getFullYear, getFooterCopy } from './utils';
 
 
 function App() {
+  const isIndex = true;
   return (
     <div className="App">
       <div className="App-header">
@@ -18,9 +20,11 @@ function App() {
 
       </div>
       <hr/>
-      
+
       <div className="App-footer">
-        <p>Copyright 2020 - holberton School</p>
+        
+        <p>Copyright {getFullYear()} - {getFooterCopy(isIndex)}</p>
+
       </div>
       
       
