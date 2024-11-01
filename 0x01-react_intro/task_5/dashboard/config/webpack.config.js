@@ -2,35 +2,23 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  // Defines the entry point
   entry: './src/index.js',
-
-  // Defines the output path and filename for the bundled file
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: 'bundle.js',
-    clean: true,  // Clears the dist folder on each build
   },
-
-  // Enables inline source maps for easier debugging
+  mode: 'development',
   devtool: 'inline-source-map',
-
-  // Configures the development server with hot reloading
-  devServer: {
-    static: path.resolve(__dirname, '../dist'),
-    hot: true,
-    open: false,
-    port: 8080,
-  },
-
-  // Loaders
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+          },
         },
       },
       {
@@ -38,29 +26,32 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.(png|jpe?g|gif)$/i,
-        type: 'asset/resource',
-        generator: {
-          filename: 'images/[name][ext]',
-        },
+        test: /\.(png|jpe?g|gif|svg)$/i,
         use: [
           {
             loader: 'image-webpack-loader',
             options: {
-              bypassOnDebug: true,
-              disable: true,
+              mozjpeg: {
+                quality: 75,
+                progressive: true,
+              },
+              // Add other loaders for different image formats if necessary
             },
           },
         ],
       },
     ],
   },
-
-  // Plugins
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
-      filename: 'index.html',
+      template: './dist/index.html',
     }),
   ],
+  devServer: {
+    contentBase: path.join(__dirname, '../dist'),
+    hot: true,
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
 };
