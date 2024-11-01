@@ -2,32 +2,65 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  //This property defines where the application starts
-  entry:'./src/index.js',
+  // Defines the entry point
+  entry: './src/index.js',
 
-  //This property defines the file path and the file name which will be used for deploying the bundled file
-  output:{
-    path: path.join(__dirname, '/dist'),
-    filename: 'bundle.js'
+  // Defines the output path and filename for the bundled file
+  output: {
+    path: path.resolve(__dirname, '../dist'),
+    filename: 'bundle.js',
+    clean: true,  // Clears the dist folder on each build
   },
 
-  //Setup loaders
+  // Enables inline source maps for easier debugging
+  devtool: 'inline-source-map',
+
+  // Configures the development server with hot reloading
+  devServer: {
+    static: path.resolve(__dirname, '../dist'),
+    hot: true,
+    open: false,
+    port: 8080,
+  },
+
+  // Loaders
   module: {
     rules: [
       {
-        test: /\.js$/, 
+        test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
-        }
-      }
-    ]
+          loader: 'babel-loader',
+        },
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'images/[name][ext]',
+        },
+        use: [
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              bypassOnDebug: true,
+              disable: true,
+            },
+          },
+        ],
+      },
+    ],
   },
 
-  // Setup plugin to use a HTML file for serving bundled js files
+  // Plugins
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html'
-    })
-  ]
-}
+      template: './src/index.html',
+      filename: '../dist/index.html',
+    }),
+  ],
+};

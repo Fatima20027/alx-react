@@ -4,16 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack serve --config config/webpack.config.js",
+    "build": "webpack --config config/webpack.config.js"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "webpack": "^5.96.1",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.1.0"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.25.9",
     "babel-core": "^6.26.3",
@@ -21,6 +20,9 @@
     "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.6.3",
     "image-webpack-loader": "^8.1.0",
-    "style-loader": "^4.0.0"
+    "style-loader": "^4.0.0",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.15.2"
   }
 }
