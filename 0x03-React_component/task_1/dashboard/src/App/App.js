@@ -38,9 +38,9 @@ class App extends Component {
   }
 }
 
-// Define prop types
+
 App.propTypes = {
-  logOut: PropTypes.func.isRequired,
+  logOut: PropTypes.func,
 };
 
 export default App;
