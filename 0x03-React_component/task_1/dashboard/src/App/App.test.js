@@ -3,6 +3,31 @@ import { shallow } from "enzyme";
 import App from "./App";
 
 describe("<App />", () => {
+
+  let wrapper;
+  let logOutMock;
+  let originalAlert;
+
+  beforeAll(() => {
+    // Mock the alert function
+    originalAlert = window.alert;
+    window.alert = jest.fn();
+  });
+
+  afterAll(() => {
+    // Restore the original alert function
+    window.alert = originalAlert;
+  });
+
+  beforeEach(() => {
+    logOutMock = jest.fn();
+    wrapper = shallow(<App logOut={logOutMock} />);
+  });
+
+  afterEach(() => {
+    wrapper.unmount();
+  });
+
   it("App renders without any errors", () => {
     const wrapper = shallow(<App />);
     expect(wrapper.exists()).toEqual(true);
