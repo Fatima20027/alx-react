@@ -1,12 +1,12 @@
+import React, { Component } from 'react';
 import './App.css';
-import React from 'react';
 import Notifications from '../Notifications/Notifications';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import Login from '../Login/Login';
 
 
-class App extends React.Component{
+class App extends Component{
   render() {
     return (
       <>
