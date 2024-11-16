@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
 
 export default function Notifications({
   displayDrawer = false,
-  listNotifications,
   handleDisplayDrawer,
   handleHideDrawer,
 }){
@@ -46,10 +45,19 @@ export default function Notifications({
   )
 }
 
-Notifications.propTypes = {
+NotificationItem.propTypes = {
   displayDrawer: PropTypes.bool.isRequired,
   handleDisplayDrawer: PropTypes.func.isRequired,
   handleHideDrawer: PropTypes.func.isRequired,
-
+  listNotifications: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      type: PropTypes.string.isRequired,
+      value: PropTypes.string,
+      html: PropTypes.string,
+    })
+  ).isRequired,
 };
+
+
 

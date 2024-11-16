@@ -1,18 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, css } from "aphrodite";
-
-const styles = StyleSheet.create({
-  blue:{ 
-    color: "blue",
-
-  },
-
-  red: {
-    color: "red",
-  },
-});
-
+import { StyleSheet, css } from 'aphrodite';
 
 class NotificationItem extends React.PureComponent {
 	constructor(props) {
@@ -23,33 +11,53 @@ class NotificationItem extends React.PureComponent {
 		const { type, html, value, markAsRead, id } = this.props;
 		const styleDataType = type === 'default' ? styles.blue : styles.red;
 		if (value) {
-			return (<li data-notification-type={type} className={css(styleDataType)} onClick={() => markAsRead(id)} >{value}</li>);
+			return (<li data-notification-type={type} className={css(styleDataType, styles.itemList)} onClick={() => markAsRead(id)} >{value}</li>);
 		} else {
-			return (<li dangerouslySetInnerHTML={html} className={css(styleDataType)}onClick={() => markAsRead(id)} data-notification-type={type}></li>)
+			return (<li dangerouslySetInnerHTML={html} className={css(styleDataType, styles.itemList)}onClick={() => markAsRead(id)} data-notification-type={type}></li>)
 		}
 	}
 }
 
-NotificationItem.propTypes = {
-  displayDrawer: PropTypes.bool.isRequired,
-  handleDisplayDrawer: PropTypes.func.isRequired,
-  handleHideDrawer: PropTypes.func.isRequired,
-  listNotifications: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      type: PropTypes.string.isRequired,
-      value: PropTypes.string,
-      html: PropTypes.string,
-    })
-  ).isRequired,
+const responsive = {
+	small: '@media screen and (max-width: 900px)'
 };
 
-// Define default props
-NotificationItem.defaultProps = {
-  type: 'default',
-  value: '',
-  html: {},
+const styles = StyleSheet.create({
+	red: {
+		color: 'red'
+	},
 
+	blue: {
+		color: 'blue'
+	},
+
+	itemList: {
+		[responsive.small]: {
+			display: 'block',
+			fontSize: '20px',
+			padding: '10px 8px',
+			listStyle: 'none',
+			borderBottom: '1px solid black'
+		}
+	}
+});
+
+NotificationItem.propTypes = {
+	type: PropTypes.string,
+	value: PropTypes.string,
+	html: PropTypes.shape({
+		__html: PropTypes.string
+	}),
+	markAsRead: PropTypes.func,
+	id: PropTypes.number
+};
+
+NotificationItem.defaultProps = {
+	type: 'default',
+	value: '',
+	html: {},
+	markAsRead: () => {},
+	id: 0
 };
 
 export default NotificationItem;
